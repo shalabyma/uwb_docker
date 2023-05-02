@@ -1,6 +1,3 @@
-NEXT STEPS 0) upate this liste based on my other handwritten list 1) git this, 2) uwb_ros2, 3) figure out how to run everything using one command 4) docker compose 5) rosbag
-HOW DO I PUBLISH TOPICS BETWEEN CONTAINERS OR SOMETHING TO STORE ALL TOPICS TO A ROS BAG
-
 FROM osrf/ros:melodic-desktop
 
 SHELL ["bin/bash", "-c"]

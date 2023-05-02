@@ -22,19 +22,15 @@ RUN pip3 install numpy \
 
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 
-# RUN mkdir -p src/uwb_interface
-COPY ./uwb_interface /src/uwb_interface
-VOLUME ./uwb_interface /src/uwb_interface
-
 RUN mkdir -p catkin_ws/src
 COPY ./uwb_ros /catkin_ws/src/uwb_ros
 RUN source /opt/ros/melodic/setup.bash \
     && cd catkin_ws \
     && catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
 RUN mkdir -p catkin_ws/src/uwb_ros
-VOLUME ./uwb_ros /catkin_ws/src/uwb_ros
 
 RUN echo "source ./catkin_ws/devel/setup.bash" >> ~/.bashrc
 
+COPY ./uwb_interface /src/uwb_interface
 RUN cd /src/uwb_interface && pip3 install -e .
 

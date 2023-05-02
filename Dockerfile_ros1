@@ -28,8 +28,7 @@ COPY ./uwb_ros /catkin_ws/src/uwb_ros
 RUN source /opt/ros/melodic/setup.bash \
     && cd catkin_ws \
     && catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
-RUN mkdir -p catkin_ws/src/uwb_ros
-
+    
 RUN echo "source ./catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 COPY ./uwb_interface /src/uwb_interface

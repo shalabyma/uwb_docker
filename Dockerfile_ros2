@@ -5,37 +5,22 @@ SHELL ["bin/bash", "-c"]
 
 # dependencies
 RUN apt-get update --fix-missing && \
-    apt-get install -y git \
-                       nano \
-                       python3-pip \
-                       tmux \ 
-                       usbutils
+    apt-get install -y python3-pip
 
 RUN pip3 install --upgrade pip
-RUN pip3 install numpy \
-                 scipy \
-                 matplotlib \
-                 msgpack \
-                 serial \
-                 rospkg \
-                 empy \
-                 genpy
 
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
-RUN mkdir -p src/uwb_interface
-COPY ./uwb_interface /src/uwb_interface
-
 RUN mkdir -p /ros2_ws/src
-COPY ./uwb_ros2/uwb_driver /ros2_ws/src/uwb_ros2/uwb_driver
-COPY ./uwb_ros2/uwb_msgs /ros2_ws/src/uwb_ros2/uwb_msgs
+COPY ./uwb_ros2/uwb_driver /ros2_ws/src/uwb_driver
+COPY ./uwb_ros2/uwb_msgs /ros2_ws/src/uwb_msgs
+
+RUN cd /ros2_ws/src/uwb_driver && pip3 install -e .
 
 RUN source /opt/ros/humble/setup.bash \
     && cd /ros2_ws \
     && colcon build --symlink-install
 RUN echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
-
-RUN cd /src/uwb_interface && pip3 install -e .
 
 CMD ["bash", "-c", "source /ros2_ws/install/setup.bash && ros2 run uwb_driver uwb_node"]
 
